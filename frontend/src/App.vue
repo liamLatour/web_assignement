@@ -1,30 +1,34 @@
-<script setup>
-import { RouterLink, RouterView } from "vue-router";
-import HelloWorld from "./components/HelloWorld.vue";
-</script>
-
 <template>
-  <header>
-    <img
-      alt="Vue logo"
-      class="logo"
-      src="@/assets/logo.svg"
-      width="125"
-      height="125"
-    />
+    <header>
+      <div class="title">{{title}}</div>
+    </header>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
+    <section class="main-content w-50 mx-auto">
+      <main-navigation></main-navigation>
+      <windows-list></windows-list>
+    </section>
 
   <RouterView />
 </template>
+
+<script setup>
+  import { RouterLink, RouterView } from "vue-router";
+  import MainNavigation from './components/MainNavigation.vue';
+import WindowsList from './components/WindowsList.vue';
+
+export default {
+  name: 'App',
+  components: {
+    MainNavigation,
+    WindowsList
+  },
+  data: function() {
+    return {
+      title: 'My App Title'
+    }
+  }
+}
+</script>
 
 <style scoped>
 header {
