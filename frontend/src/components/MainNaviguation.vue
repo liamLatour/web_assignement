@@ -1,18 +1,18 @@
 <template>
-    <ul class="nav nav-tabs">
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#">Windows</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Rooms</a>
-      </li>
+  <div class="bg-neutral-800">
+    <ul class="flex m-auto max-w-5xl">
+      <a class="p-1 m-2 text-base rounded" href="/buildings"> Buildings </a>
+      <a class="p-1 m-2 text-base rounded" href="/rooms"> Rooms </a>
+      <a class="p-1 m-2 text-base rounded" href="/heaters"> Heaters </a>
+      <a class="p-1 m-2 text-base rounded" href="/windows">Windows</a>
     </ul>
-  </template>
-  
-  
-  <script>
-  export default {
-    name: 'MainNavigation'
-  }
-  </script>
-  
+  </div>
+</template>
+
+<script>
+export default {
+  name: "MainNavigation",
+};
+</script>
+
+<style lang="scss" scoped></style>
