@@ -1,9 +1,0 @@
-Mandatory functionalities for your frontend : 
-    Implement the functionality of the "Delete window" button
-    Add a form to the windows list page that allow the creation of new windows
-    Implement all these functionalities for Rooms (listing rooms, creating new rooms, deleting rooms), and setup the navigation menu in order to switch from windows list to rooms list.
-
-Optionnal features : 
-    Polishing your interface : visual feedback on errors, loading animations. You can use Chrome Developper Tools to simulate a slow internet connection (under the tab "Network", Set the "Throttling" dropdown to "Slow 3G").
-    Adding a way to rename windows and rooms
-    Any other features you want to do (depending on the capabilities of your API)
