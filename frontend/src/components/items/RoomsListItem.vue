@@ -1,12 +1,21 @@
 <template>
-  <div class="border rounded p-2 m-4">
+  <div class="border rounded p-3 m-4 w-40">
     <span
       class="absolute cursor-pointer -left-2 -top-2 bg-red-600 rounded-3xl w-6 h-6 text-white text-center z-10"
-      >&#x2716;</span
+      @click="deleteWindow"
     >
+      &#x2716;
+    </span>
 
     <div class="flex flex-col justify-center items-center">
-      <div class="font-bold text-xl p-3">{{ room.name }}</div>
+      <input
+        v-model="name"
+        id="name"
+        class="bg-transparent text-center font-bold text-xl px-2 m-1 w-full"
+        size="1"
+        @blur="renameRoom"
+      />
+
       <div class="text-lg">{{ room.buildingName }}</div>
       <div class="text-lg">Floor: {{ room.floor }}</div>
       <div
@@ -15,19 +24,7 @@
       >
         {{ room.currentTemperature }} / {{ room.targetTemperature }}
       </div>
-
-      <div
-        class="m-2 cursor-pointer text-base"
-        :class="{ open: isRoomOpen, closed: !isRoomOpen }"
-        @click="switchRoom"
-      >
-        <template v-if="isRoomOpen">
-          <span class="text-green-600 text-xs -top-1">&#x2B24;</span> Open
-        </template>
-        <template v-else>
-          <span class="text-red-600">&#x2716;</span> Closed
-        </template>
-      </div>
+      <div class="text-lg" v-else>-</div>
     </div>
   </div>
 </template>
@@ -39,23 +36,44 @@ export default {
   name: "RoomsListItem",
   props: ["room"],
   data: function () {
-    return {};
+    return {
+      name: "",
+    };
   },
-  computed: {
-    isRoomOpen: function () {
-      return this.room.roomStatus === "OPEN";
-    },
+  created: async function () {
+    this.name = this.room.name;
   },
   methods: {
-    async switchRoom() {
-      let response = await axios.put("/api/rooms/" + this.room.id + "/switch", {
-        auth: {
-          username: "user",
-          password: "password",
+    async renameRoom() {
+      let response = await axios.post(
+        "/api/rooms/",
+        {
+          buildingId: this.room.buildingId,
+          buildingName: this.room.buildingName,
+          currentTemperature: this.room.currentTemperature,
+          targetTemperature: this.room.targetTemperature,
+          floor: this.room.floor,
+          id: this.room.id,
+          name: this.name,
         },
-      });
+        {
+          auth: {
+            username: "admin",
+            password: "pass",
+          },
+        }
+      );
       let updatedRoom = response.data;
       this.$emit("room-updated", updatedRoom);
+    },
+    async deleteWindow() {
+      await axios.delete("/api/rooms/" + this.room.id, {
+        auth: {
+          username: "admin",
+          password: "pass",
+        },
+      });
+      this.$emit("room-deleted", this.room);
     },
   },
 };

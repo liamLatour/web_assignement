@@ -1,6 +1,8 @@
 <template>
   <div class="flex flex-wrap items-center justify-around pt-3">
+    <div class="lds-dual-ring" v-if="!fetched"></div>
     <windows-list-item
+      v-else
       v-for="window in windows"
       :window="window"
       :key="window.id"
@@ -23,18 +25,20 @@ export default {
   data: function () {
     return {
       /* Initialize windows with an empty array, while waiting for actual data to be retrieved from the API */
+      fetched: false,
       windows: [],
     };
   },
   created: async function () {
     let response = await axios.get("/api/windows", {
       auth: {
-        username: "user",
-        password: "password",
+        username: "admin",
+        password: "pass",
       },
     });
     let windows = response.data;
     this.windows = windows;
+    this.fetched = true;
   },
   methods: {
     updateWindow(newWindow) {
@@ -57,4 +61,29 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>

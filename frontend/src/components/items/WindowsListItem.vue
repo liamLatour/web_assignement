@@ -1,5 +1,5 @@
 <template>
-  <div class="border rounded p-2 m-4">
+  <div class="border rounded p-3 m-4 w-40">
     <span
       class="absolute cursor-pointer -left-2 -top-2 bg-red-600 rounded-3xl w-6 h-6 text-white text-center z-10"
       @click="deleteWindow"
@@ -8,14 +8,20 @@
     </span>
 
     <div class="flex flex-col justify-center items-center">
-      <div class="font-bold text-xl p-3">{{ window.name }}</div>
-      <div class="text-lg">{{ window.roomName }}</div>
+      <input
+        v-model="name"
+        id="name"
+        class="bg-transparent text-center font-bold text-xl px-2 m-1 w-full"
+        size="1"
+        @blur="renameWindow"
+      />
+      <div class="text-base">{{ window.roomName }}</div>
 
-      <div class="">
+      <div class="flex items-center justify-around">
         <label class="switch h-6" @click="switchWindow">
           <span class="slider" :class="{ checked: isWindowOpen }"></span>
         </label>
-        <div class="inline p-3">
+        <div class="inline p-3 pb-1">
           <label class="font-bold text-base" v-if="isWindowOpen">
             Opened
           </label>
@@ -33,7 +39,12 @@ export default {
   name: "WindowsListItem",
   props: ["window"],
   data: function () {
-    return {};
+    return {
+      name: "",
+    };
+  },
+  created: async function () {
+    this.name = this.window.name;
   },
   computed: {
     isWindowOpen: function () {
@@ -41,13 +52,33 @@ export default {
     },
   },
   methods: {
+    async renameWindow() {
+      let response = await axios.post(
+        "/api/windows/",
+        {
+          id: this.window.id,
+          name: this.name,
+          roomId: this.window.roomId,
+          roomName: this.window.roomName,
+          windowStatus: this.window.windowStatus,
+        },
+        {
+          auth: {
+            username: "admin",
+            password: "pass",
+          },
+        }
+      );
+      let updatedWindow = response.data;
+      this.$emit("window-updated", updatedWindow);
+    },
     async switchWindow() {
       let response = await axios.put(
         "/api/windows/" + this.window.id + "/switch",
         {
           auth: {
-            username: "user",
-            password: "password",
+            username: "admin",
+            password: "pass",
           },
         }
       );
@@ -57,8 +88,8 @@ export default {
     async deleteWindow() {
       await axios.delete("/api/windows/" + this.window.id, {
         auth: {
-          username: "user",
-          password: "password",
+          username: "admin",
+          password: "pass",
         },
       });
       this.$emit("window-deleted", this.window);

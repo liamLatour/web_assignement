@@ -87,8 +87,8 @@ export default {
   created: async function () {
     let response = await axios.get("/api/rooms", {
       auth: {
-        username: "user",
-        password: "password",
+        username: "admin",
+        password: "pass",
       },
     });
     let rooms = response.data;
@@ -105,8 +105,8 @@ export default {
         },
         {
           auth: {
-            username: "user",
-            password: "password",
+            username: "admin",
+            password: "pass",
           },
         }
       );
