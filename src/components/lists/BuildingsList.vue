@@ -29,15 +29,12 @@ export default {
     };
   },
   created: async function () {
-    let response = await axios.get(
-      "http://liam-latour.cleverapps.io/api/buildings",
-      {
-        auth: {
-          username: "admin",
-          password: "pass",
-        },
-      }
-    );
+    let response = await axios.get("/api/buildings", {
+      auth: {
+        username: "admin",
+        password: "pass",
+      },
+    });
     let buildings = response.data;
     this.buildings = buildings;
     this.fetched = true;
