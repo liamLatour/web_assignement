@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import { RouterLink, RouterView } from "vue-router";
+import { RouterView } from "vue-router";
 import MainNavigation from "./components/MainNaviguation.vue";
 
 export default {

@@ -1,18 +1,18 @@
 <template>
   <div class="bg-neutral-800">
     <ul class="flex m-auto max-w-5xl">
-      <a class="p-1 m-2 text-base rounded" href="/web_assignement/buildings">
+      <RouterLink class="p-1 m-2 text-base rounded" to="/buildings">
         Buildings
-      </a>
-      <a class="p-1 m-2 text-base rounded" href="/web_assignement/rooms">
+      </RouterLink>
+      <RouterLink class="p-1 m-2 text-base rounded" to="/rooms">
         Rooms
-      </a>
-      <a class="p-1 m-2 text-base rounded" href="/web_assignement/heaters">
+      </RouterLink>
+      <RouterLink class="p-1 m-2 text-base rounded" to="/heaters">
         Heaters
-      </a>
-      <a class="p-1 m-2 text-base rounded" href="/web_assignement/windows">
+      </RouterLink>
+      <RouterLink class="p-1 m-2 text-base rounded" to="/windows">
         Windows
-      </a>
+      </RouterLink>
     </ul>
   </div>
 </template>
