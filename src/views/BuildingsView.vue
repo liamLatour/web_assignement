@@ -59,7 +59,7 @@ export default {
   methods: {
     async addBuilding() {
       let response = await axios.post(
-        "/api/buildings/",
+        "http://liam-latour.cleverapps.io/api/buildings/",
         {
           name: this.name,
           address: this.address,
